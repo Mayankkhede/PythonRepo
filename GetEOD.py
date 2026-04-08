@@ -9,8 +9,8 @@ from email.message import EmailMessage
 # =========================
 JIRA_URL = "https://mayankkhede.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
-API_TOKEN = "ATATT3xFfGF04YLNkaPbbL2JqNZHUJy_KZ868pi2LnDzoQB8k54vnBK18JHmMpC2JcUrPinhL3syAUy0GBBnoEE1MbKx_D5tDKpiHYyf9uYfVag9r_q7ibnKdSybbsjEqRBGQ3-L217T6PoFbYnaCnUHOBUl8_z28dfE5jXEfiM3QCA5lynS9qw=F556F8D0" 
-
+API_TOKEN = "ATATT3xFfGF0dpdn2QvNSpFyDahYAm_He4qoIruRfu304RPG01V6uE4Np2Il63QXOuh6f1DMcJU3CpTysW-rJ54GxJ8FCNHMSno22u-CfUjlthyIgPvT-XgZJcHOAwxzGSfC9cvzNA-gxm_z4aWX9_HBIjNyNfKtBGN6uWc_i34saMXTe_0NY-E=4CB0B676"
+ 
 JQL = """
 project = LOGI
 AND type IN (Bug, Story, "Tech Debt")
@@ -162,7 +162,7 @@ def build_report(jira_conn, issues):
  
 def send_email(report_text, file_name):
     sender_email = "mayankkhede0000@gmail.com"
-    sender_password = "djcq ufqd stre ylte"  # ⚠️ Replace this
+    sender_password = "gmqt gvul rksj qtvf"  # ⚠️ Replace this
     receiver_email = "c-mayank.khede@on24.com"   # ⚠️ Replace this
  
     msg = EmailMessage()
@@ -227,3 +227,4 @@ def main():
  
 if __name__ == "__main__":
     main()
+ 
