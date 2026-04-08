@@ -3,14 +3,26 @@ from datetime import datetime
  
 import smtplib
 from email.message import EmailMessage
+
+from dotenv import load_dotenv
+import os
+
  
 # =========================
 # JIRA CONFIGURATION
 # =========================
 JIRA_URL = "https://mayankkhede.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
-API_TOKEN = "ATATT3xFfGF0dpdn2QvNSpFyDahYAm_He4qoIruRfu304RPG01V6uE4Np2Il63QXOuh6f1DMcJU3CpTysW-rJ54GxJ8FCNHMSno22u-CfUjlthyIgPvT-XgZJcHOAwxzGSfC9cvzNA-gxm_z4aWX9_HBIjNyNfKtBGN6uWc_i34saMXTe_0NY-E=4CB0B676"
- 
+
+# Load .env file
+load_dotenv()
+
+# Get API token
+API_TOKEN = os.getenv("API_TOKEN")
+
+if not API_TOKEN:
+    raise ValueError("API_TOKEN not found!")
+
 JQL = """
 project = LOGI
 AND type IN (Bug, Story, "Tech Debt")
