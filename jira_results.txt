@@ -1,0 +1,4 @@
+JQL Query: project = LOGI AND type = Test AND labels = c-log-presentersreportpage ORDER BY created DESC
+Total Issues Found: 0
+============================================================
+

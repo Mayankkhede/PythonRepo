@@ -1,0 +1,42 @@
+Hello Team,
+
+Below are the Jira items for today:
+
+Story / Tech Debt:
+
+LOGI-11 : Dashboard - Display user analytics summary
+Status: QA-Inprogress and reported below issue
+LOGI-73 : sub issue is creat today for this jira 1
+LOGI-74 : sub issue is created today 2
+
+LOGI-15 : [Tech] Implement centralized logging
+Status: QA-Inprogress and reported below issue
+LOGI-72 : Sub issue is created today 1
+
+LOGI-12 :  [Tech] Optimize Login API Response Time
+Status: QA-Inprogress and reported below issue
+LOGI-75 : sub issue 1 created today for this jira 1
+LOGI-76 : sub issue 1 created today for this jira 22
+LOGI-77 : sub issue 1 created today for this jira 333
+
+LOGI-9 : QA-AI-POC : UserStory2
+Status: QA-Inprogress
+
+LOGI-8 : Forgot Password - Reset password functionality
+Status: QA-Inprogress
+
+LOGI-7 :  Login - User should be able to login with valid credentials
+Status: QA-Inprogress
+
+Standalone Bugs:
+
+LOGI-78 : [Bug]: Created today
+Status: To Do
+
+LOGI-3 : [Bug] User unable to login with valid credentials
+Status: QA-Inprogress
+
+Please let us know if any more information is required.
+
+Thanks,
+Mayank
