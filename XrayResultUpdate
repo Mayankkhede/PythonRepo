@@ -1,0 +1,73 @@
+import requests
+
+def update_xray_status(test_key, status, comment=""):
+    # 1. Get Authentication Token
+    auth_url = "https://xray.cloud.getxray.app/api/v2/authenticate"
+    
+    # Enter your actual keys here
+    creds = {
+        "client_id": "3A5BAD8D68104DF89730113CAF227F7B", 
+        "client_secret": "e330893402d6facd44c33d9ea2814a46d6baad1a3e01f710fe29e9c581b8a0b0"
+    }
+    
+    try:
+        auth_response = requests.post(auth_url, json=creds)
+        auth_response.raise_for_status() 
+        token = auth_response.json()
+        
+        # 2. Prepare Data for a SPECIFIC Test Execution
+        # This part is now correctly indented inside the try block
+        import_url = "https://xray.cloud.getxray.app/api/v2/import/execution"
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+
+        # Ensure this key matches the execution on your board (e.g., LOGI-70)
+        execution_key = "LOGI-70" 
+
+        payload = {
+            "testExecutionKey": execution_key,
+            "tests": [
+                {
+                    "testKey": test_key, 
+                    "status": status,    
+                    "comment": comment
+                }
+            ]
+        }
+
+        # 3. Send to Xray
+        response = requests.post(import_url, json=payload, headers=headers)
+        print(f"Xray Sync Result: {response.status_code} - {response.text}")
+        
+    except Exception as e:
+        print(f"Failed to connect to Xray: {e}")
+
+# --- YOUR TEST EXECUTION ---
+
+def run_my_test():
+    # This must match the Test Key (e.g., LOGI-23)
+    test_key = "LOGI-23" 
+    
+    try:
+        print(f"Starting test for {test_key}...")
+        
+        # Your actual testing logic goes here
+        # Example: checking if a login button is present
+        assert True 
+        
+        print("Result: PASS. Updating Jira...")
+        update_xray_status(test_key, "PASSED", "Automated test passed successfully.")
+        
+    except AssertionError:
+        print("Result: FAIL. Updating Jira...")
+        update_xray_status(test_key, "FAILED", "Assertion failed in Python script.")
+        
+    except Exception as e:
+        print(f"Result: ERROR. Updating Jira...")
+        update_xray_status(test_key, "FAILED", f"System Error: {str(e)}")
+
+# This tells Python to actually run the run_my_test function
+if __name__ == "__main__":
+    run_my_test()

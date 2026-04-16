@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="4" time="0.166" timestamp="2026-04-16T17:51:09.047986+05:30" hostname="Mayank-Khede"><testcase classname="test_logic" name="test_addition" time="0.003"><properties><property name="test_key" value="LOGI-18" /></properties></testcase><testcase classname="test_logic" name="test_data_check" time="0.002"><properties><property name="test_key" value="LOGI-19" /></properties><failure message="AssertionError: assert 'Charlie' in ['Alice', 'Bob']">record_property = &lt;function record_property.&lt;locals&gt;.append_property at 0x000001CACAC01900&gt;
+
+    def test_data_check(record_property):
+        record_property("test_key", "LOGI-19")
+        names = ["Alice", "Bob"]
+&gt;       assert "Charlie" in names
+E       AssertionError: assert 'Charlie' in ['Alice', 'Bob']
+
+test_logic.py:12: AssertionError</failure></testcase><testcase classname="test_logic" name="test_is_active" time="0.001"><properties><property name="test_key" value="LOGI-20" /></properties></testcase><testcase classname="test_logic" name="test_string_match" time="0.001"><properties><property name="test_key" value="LOGI-21" /></properties></testcase></testsuite></testsuites>
