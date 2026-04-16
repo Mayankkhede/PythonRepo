@@ -2,32 +2,34 @@ pipeline {
     agent any
     
     environment {
-        // Use the ID from your "Manage Credentials" screen
+        // This is the ID of your Username/Password credential in Jenkins
         XRAY_CREDS_ID = 'xray-cloud-creds'
-        // Replace with your actual Jira Test Execution Key
+        
+        // Your specific Jira Test Execution Key
         TEST_EXEC_KEY = 'LOGI-70'
-        // The name you gave to the Jira instance in Jenkins System config
+        
+        // The 'Configuration Alias' you set in Manage Jenkins > System
         JIRA_INSTANCE = 'JIRA_INSTANCE'
     }
 
     stages {
         stage('Install Environment') {
             steps {
-                // Installs pytest so the agent can run the scripts
-                sh 'pip install pytest'
+                // Using 'bat' for Windows and 'python -m' to ensure the 3.14 path is used
+                bat 'python -m pip install pytest'
             }
         }
 
         stage('Run Logic Tests') {
             steps {
-                // Runs tests. '|| true' allows the pipeline to continue even if tests fail
-                sh 'python -m pytest test_logic.py --junitxml=results.xml || true'
+                // '|| exit 0' ensures the pipeline continues to the upload stage even if a test fails
+                bat 'python -m pytest test_logic.py --junitxml=results.xml || exit 0'
             }
         }
 
         stage('Update Xray Execution') {
             steps {
-                // Sends results.xml to your specific Test Execution
+                // Sends results.xml to update LOGI-70
                 step([$class: 'XrayImportResultsBuilder',
                     serverInstance: "${env.JIRA_INSTANCE}",
                     endpointName: '/junit',
