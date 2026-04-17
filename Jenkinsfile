@@ -29,15 +29,16 @@ pipeline {
 
         stage('Update Xray Execution') {
             steps {
-                // Sends results.xml to update LOGI-70
-                step([$class: 'XrayImportResultsBuilder',
+                // Modern syntax for Xray Connector
+                xrayImportResults (
                     serverInstance: "${env.JIRA_INSTANCE}",
+                    projectKey: "LOGI", 
                     endpointName: '/junit',
                     importFilePath: 'results.xml',
                     importInfo: [
                         testExecutionKey: "${env.TEST_EXEC_KEY}"
                     ]
-                ])
+                )
             }
         }
     }
