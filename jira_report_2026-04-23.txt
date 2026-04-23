@@ -4,37 +4,11 @@ Below are the Jira items for today:
 
 Story / Tech Debt:
 
-LOGI-11 : Dashboard - Display user analytics summary
-Status: QA-Inprogress
-
-LOGI-15 : [Tech] Implement centralized logging
-Status: QA-Inprogress
-
-LOGI-13 : Test Coverage Improvement
-Status: To Do
-
-LOGI-12 :  [Tech] Optimize Login API Response Time
-Status: QA-Inprogress
-
-LOGI-9 : QA-AI-POC : UserStory2
-Status: QA-Inprogress
-
-LOGI-8 : Forgot Password - Reset password functionality
-Status: QA-Inprogress
-
-LOGI-7 :  Login - User should be able to login with valid credentials
-Status: QA-Inprogress
-
-LOGI-6 : AI-QA-POC : UserStory : Task 1
-Status: QA-Inprogress
+No Story / Tech Debt items found.
 
 Standalone Bugs:
 
-LOGI-78 : [Bug]: Created today
-Status: To Do
-
-LOGI-3 : [Bug] User unable to login with valid credentials
-Status: QA-Inprogress
+No Bugs found.
 
 Please let us know if any more information is required.
 
