@@ -1,0 +1,16 @@
+Hello Team,
+
+Below are the Jira items for today:
+
+Story / Tech Debt:
+
+No Story / Tech Debt items found.
+
+Standalone Bugs:
+
+No Bugs found.
+
+Please let us know if any more information is required.
+
+Thanks,
+Mayank

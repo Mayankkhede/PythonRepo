@@ -5,7 +5,7 @@ from jira import JIRA
 # Replace with your fresh API Token for security
 JIRA_URL = "https://mayankkhede.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
-API_TOKEN = "ATATT3xFfGF04YLNkaPbbL2JqNZHUJy_KZ868pi2LnDzoQB8k54vnBK18JHmMpC2JcUrPinhL3syAUy0GBBnoEE1MbKx_D5tDKpiHYyf9uYfVag9r_q7ibnKdSybbsjEqRBGQ3-L217T6PoFbYnaCnUHOBUl8_z28dfE5jXEfiM3QCA5lynS9qw=F556F8D0" 
+API_TOKEN = "ATATT3xFfGF0KoNtkpfZ3b9tp3TN21knmZPjGbU310iQKmdrV4-ExXUTMrWdpNP-v7DJ7lBOPLSL1Eo7tu_4tWgbRFTRAbhv3voPPNiFKixzYYu7Sb6iByMhHOQ0lfYkK2PWz2EfXuSx6uiJ8iZ-LVQxmEa2hkkHYok6lCxBshiFUML-d3Mkdp4=264BD6DF" 
 
 # Initialize Jira connection once
 @st.cache_resource

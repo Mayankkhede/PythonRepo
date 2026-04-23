@@ -175,10 +175,10 @@ def build_report(jira_conn, issues):
 def send_email(report_text, file_name):
     sender_email = "mayankkhede0000@gmail.com"
     sender_password = "gmqt gvul rksj qtvf"  # ⚠️ Replace this
-    receiver_email = "c-mayank.khede@on24.com"   # ⚠️ Replace this
  
     msg = EmailMessage()
     msg["Subject"] = f"Jira Daily Report - {datetime.now().strftime('%Y-%m-%d')}"
+    receiver_email = "c-mayank.khede@on24.com"   # ⚠️ Replace this
     msg["From"] = sender_email
     msg["To"] = receiver_email
  
