@@ -1,0 +1,54 @@
+Hello Team,
+
+Below are the Jira items for today:
+
+Story / Tech Debt:
+
+LOGI-11 : Dashboard - Display user analytics summary
+Status: QA-Inprogress
+
+LOGI-15 : [Tech] Implement centralized logging
+Status: QA-Inprogress and reported below issue
+LOGI-179 : QALogiTD: Rework
+LOGI-180 : QALogiTD: Test Cases Execution to verify Data Integrity
+LOGI-181 : QALogiTD: Test Cases Execution on UI (desktops: on all major supported OS/browsers) to Verify functionality
+LOGI-182 : QALogiTD: Add features/scenarios to the acceptance criteria section
+LOGI-183 : QALogiTD: QA Release Readiness
+
+LOGI-13 : Test Coverage Improvement
+Status: To Do and reported below issue
+LOGI-184 : QALogiTD: Rework
+LOGI-185 : QALogiTD: Test Cases Execution to verify Data Integrity
+LOGI-186 : QALogiTD: Test Cases Execution on UI (desktops: on all major supported OS/browsers) to Verify functionality
+LOGI-187 : QALogiTD: Add features/scenarios to the acceptance criteria section
+LOGI-188 : QALogiTD: QA Release Readiness
+
+LOGI-12 :  [Tech] Optimize Login API Response Time
+Status: QA-Inprogress
+
+LOGI-9 : QA-AI-POC : UserStory2
+Status: QA-Inprogress and reported below issue
+LOGI-189 : QALogiUS: Rework
+LOGI-190 : QALogiUS: Test Cases Execution to verify Data Integrity
+LOGI-191 : QALogiUS: Test Cases Execution on UI (desktops: on all major supported OS/browsers) to Verify functionality
+LOGI-192 : QALogiUS: Add features/scenarios to the acceptance criteria section
+LOGI-193 : QALogiUS: QA Release Readiness
+
+LOGI-8 : Forgot Password - Reset password functionality
+Status: QA-Inprogress
+
+LOGI-7 :  Login - User should be able to login with valid credentials
+Status: QA-Inprogress
+
+Standalone Bugs:
+
+LOGI-78 : [Bug]: Created today
+Status: To Do
+
+LOGI-3 : [Bug] User unable to login with valid credentials
+Status: QA-Inprogress
+
+Please let us know if any more information is required.
+
+Thanks,
+Mayank

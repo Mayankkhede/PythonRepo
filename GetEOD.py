@@ -1,242 +1,73 @@
 from jira import JIRA
 from datetime import datetime
- 
-import smtplib
-from email.message import EmailMessage
 
-from dotenv import load_dotenv
-import os
-
- 
-# =========================
-# JIRA CONFIGURATION
-# =========================
+# --- 1. CONFIGURATION ---
 JIRA_URL = "https://mayankkhede.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
+# Keeping your token here as per your request
+API_TOKEN = "ATATT3xFfGF0TDq4eyk13WiIXTJvxC6kE-rHSKVfi7LlynP45Lusf6KIgx7FuSftXWH7ePRB_6vrVRebo3_lop8E3wp7BKipQ8YKIvGhiPS8ZUQAf4OEuYw_P-pw_IyBJQC4K8QlmKkFlb4MXxaM3HYeIYfWwPxaOHYrlPe_tmRjnqV7Ba_SbJw=0B5A690C" 
+PROJECT_KEY = "LOGI"
 
-# Load .env file
-load_dotenv()
+# --- 2. CONNECT ---
+jira = JIRA(server=JIRA_URL, basic_auth=(EMAIL, API_TOKEN))
 
-# Get API token
-API_TOKEN = os.getenv("API_TOKEN")
+def get_eod_report():
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    
+    # 3. IMPROVED JQL 
+    # Added "Story" and "Bug" to the list just in case the long names are causing the zero results
+    jql = (f'project = {PROJECT_KEY} '
+           f'AND issuetype IN ("UserStory (Feature Enhancement)", "Bug/Defect", "Technical Debt", "Story", "Bug") '
+           f'AND status IN ("QA-COMPLETED", "Completed", "DEV-ASSIGNED", "Closed", "QA-INPROGRESS", "QA-ONHOLD", "DEV-ASSI") '
+           f'AND updated >= "{today_str}" '
+           f'AND assignee = currentUser() '
+           f'ORDER BY updated DESC')
 
-if not API_TOKEN:
-    raise ValueError("API_TOKEN not found!")
-
-JQL = """
-project = LOGI
-AND type IN (Bug, Story, "Tech Debt")
-AND sprint = 2
-AND assignee IN (6327496e14c6b4b22109a627, 712020:e0a725f4-f6ff-4a25-b5b2-6db040fa58ca)
-ORDER BY created DESC
-"""
- 
-COMPLETED_STATUSES = ["QA-Completed", "Closed"]
- 
- 
-# =========================
-# HELPER FUNCTIONS
-# =========================
-def jira_date_to_date(date_str):
-    """
-    Convert Jira datetime string to Python date.
-    Example Jira date: 2026-04-08T10:15:22.000+0530
-    """
-    return datetime.strptime(date_str[:10], "%Y-%m-%d").date()
- 
- 
-def is_today(date_str):
-    """
-    Check if given Jira date is today's date.
-    """
-    return jira_date_to_date(date_str) == datetime.now().date()
- 
- 
-def status_changed_today(jira_conn, issue, target_statuses):
-    """
-    Return True if issue status changed to one of target_statuses today.
-    Used only when current status is QA-Completed or Closed.
-    """
-    full_issue = jira_conn.issue(issue.key, expand="changelog")
- 
-    for history in full_issue.changelog.histories:
-        for item in history.items:
-            if item.field == "status" and item.toString in target_statuses:
-                if is_today(history.created):
-                    return True
-    return False
- 
- 
-def should_include_issue(jira_conn, issue):
-    """
-    Final inclusion rule:
-    - If status is NOT QA-Completed or Closed -> always include
-    - If status is QA-Completed or Closed -> include only if status changed today
-    """
-    current_status = issue.fields.status.name
- 
-    if current_status not in COMPLETED_STATUSES:
-        return True
- 
-    return status_changed_today(jira_conn, issue, COMPLETED_STATUSES)
- 
- 
-def get_today_subtasks(jira_conn, issue):
-    """
-    Get child subtasks created today under parent Story / Tech Debt.
-    """
-    today_subtasks = []
-    subtasks = getattr(issue.fields, "subtasks", [])
- 
-    for sub in subtasks:
-        sub_issue = jira_conn.issue(sub.key)
- 
-        # If needed, you can uncomment this line to strictly allow only "Sub Issue"
-        # if sub_issue.fields.issuetype.name != "Sub Issue":
-        #     continue
- 
-        if is_today(sub_issue.fields.created):
-            today_subtasks.append(sub_issue)
- 
-    return today_subtasks
- 
- 
-def build_report(jira_conn, issues):
-    """
-    Build final report text.
-    """
-    report_lines = []
-    story_tech_section = []
-    bug_section = []
- 
-    report_lines.append("Hello Team,")
-    report_lines.append("")
-    report_lines.append("Below are the Jira items for today:")
-    report_lines.append("")
- 
-    for issue in issues:
-        issue_type = issue.fields.issuetype.name
-        key = issue.key
-        summary = issue.fields.summary
-        status = issue.fields.status.name
- 
-        # Apply main inclusion logic
-        if not should_include_issue(jira_conn, issue):
-            continue
- 
-        if issue_type in ["Story", "Tech Debt"]:
-            subtasks_today = get_today_subtasks(jira_conn, issue)
- 
-            if subtasks_today:
-                story_tech_section.append(f"{key} : {summary}")
-                story_tech_section.append(f"Status: {status} and reported below issue")
- 
-                for sub in subtasks_today:
-                    story_tech_section.append(f"{sub.key} : {sub.fields.summary}")
- 
-                story_tech_section.append("")
- 
-            else:
-                story_tech_section.append(f"{key} : {summary}")
-                story_tech_section.append(f"Status: {status}")
-                story_tech_section.append("")
- 
-        elif issue_type == "Bug":
-            bug_section.append(f"{key} : {summary}")
-            bug_section.append(f"Status: {status}")
-            bug_section.append("")
- 
-    report_lines.append("Story / Tech Debt:")
-    report_lines.append("")
- 
-    if story_tech_section:
-        report_lines.extend(story_tech_section)
-    else:
-        report_lines.append("No Story / Tech Debt items found.")
-        report_lines.append("")
- 
-    report_lines.append("Standalone Bugs:")
-    report_lines.append("")
- 
-    if bug_section:
-        report_lines.extend(bug_section)
-    else:
-        report_lines.append("No Bugs found.")
-        report_lines.append("")
- 
-    report_lines.append("Please let us know if any more information is required.")
-    report_lines.append("")
-    report_lines.append("Thanks,")
-    report_lines.append("Mayank")
- 
-    return "\n".join(report_lines)
- 
- 
-def send_email(report_text, file_name):
-    sender_email = "mayankkhede0000@gmail.com"
-    sender_password = "gmqt gvul rksj qtvf"  # ⚠️ Replace this
- 
-    msg = EmailMessage()
-    msg["Subject"] = f"Jira Daily Report - {datetime.now().strftime('%Y-%m-%d')}"
-    receiver_email = "c-mayank.khede@on24.com"   # ⚠️ Replace this
-    msg["From"] = sender_email
-    msg["To"] = receiver_email
- 
-    # Email body
-    msg.set_content(report_text)
- 
-    # Attach file
-    with open(file_name, "rb") as f:
-        file_data = f.read()
-        msg.add_attachment(file_data,
-                           maintype="application",
-                           subtype="octet-stream",
-                           filename=file_name)
- 
-    # Send email
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login(sender_email, sender_password)
-        smtp.send_message(msg)
- 
-    print("Email sent successfully!")
- 
- 
-# =========================
-# MAIN EXECUTION
-# =========================
-def main():
+    print(f"--- EOD Activity Report: {today_str} ---")
+    
     try:
-        print("Connecting to Jira...")
-        jira_conn = JIRA(server=JIRA_URL, basic_auth=(EMAIL, API_TOKEN))
-        print("Jira connection successful.")
- 
-        print("Running JQL...")
-        issues = jira_conn.search_issues(JQL, maxResults=100)
-        print(f"Total issues fetched from JQL: {len(issues)}")
- 
-        final_report = build_report(jira_conn, issues)
- 
-        print("\n================ FINAL REPORT ================\n")
-        print(final_report)
- 
-        today_str = datetime.now().strftime("%Y-%m-%d")
-        file_name = f"jira_report_{today_str}.txt"
- 
-        with open(file_name, "w", encoding="utf-8") as file:
-            file.write(final_report)
- 
-        print(f"\nReport saved as: {file_name}")
- 
-        send_email(final_report, file_name)
- 
+        print("Searching Jira...")
+        issues = jira.search_issues(jql, maxResults=50)
+        print(f"Total issues found with today's activity: {len(issues)}\n")
+        
+        if not issues:
+            print(f"Check if you have tickets assigned to you with updates on {today_str}.")
+            return
+
+        for issue in issues:
+            key = issue.key
+            summary = issue.fields.summary
+            status_name = issue.fields.status.name.upper()
+            
+            # --- 4. STATUS LOGIC ---
+            is_completed = status_name in ['QA-COMPLETED', 'COMPLETED', 'CLOSED']
+            
+            reported_sub_issues = []
+            
+            if not is_completed:
+                # Checking for "Sub Issue" children
+                subtasks = getattr(issue.fields, "subtasks", [])
+                for sub in subtasks:
+                    # We fetch the child to check its type
+                    child = jira.issue(sub.key)
+                    if child.fields.issuetype.name == "Sub Issue":
+                        reported_sub_issues.append(f"{child.key} : {child.fields.summary}")
+
+            # --- 5. FINAL FORMATTING ---
+            print(f"{key} : {summary}")
+
+            if is_completed:
+                print(f"Status: QA-completed\n")
+            elif reported_sub_issues:
+                print(f"Status: In-progress and reported below issues")
+                for item in reported_sub_issues:
+                    print(f"   {item}")
+                print("") 
+            else:
+                print(f"Status: In-progress and no issue reported\n")
+
     except Exception as e:
-        print("Error occurred:")
-        print(str(e))
- 
- 
+        print(f"Error executing agent: {e}")
+
 if __name__ == "__main__":
-    main()
- 
+    get_eod_report()
