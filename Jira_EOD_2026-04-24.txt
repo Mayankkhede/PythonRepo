@@ -1,0 +1,19 @@
+Hello Team,
+
+Below are the Jira items for today (2026-04-24):
+
+LOGI-6 : AI-QA-POC : UserStory : Task 1
+Status: QA-completed
+
+LOGI-7 :  Login - User should be able to login with valid credentials
+Status: In-progress and reported below issues:
+   LOGI-24 : unable to login with valid password 
+   LOGI-25 : message is not displaying when login invalid password
+
+LOGI-8 : Forgot Password - Reset password functionality
+Status: In-progress and reported below issues:
+   LOGI-31 : login not work
+   LOGI-32 : Password does not follow the criteria 
+
+Thanks,
+Mayank
