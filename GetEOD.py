@@ -4,10 +4,10 @@ from jira import JIRA
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
-JIRA_URL = "https://mayankkhede.atlassian.net"
+JIRA_URL = "https://harshjira.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
-API_TOKEN = "ATATT3xFfGF0TDq4eyk13WiIXTJvxC6kE-rHSKVfi7LlynP45Lusf6KIgx7FuSftXWH7ePRB_6vrVRebo3_lop8E3wp7BKipQ8YKIvGhiPS8ZUQAf4OEuYw_P-pw_IyBJQC4K8QlmKkFlb4MXxaM3HYeIYfWwPxaOHYrlPe_tmRjnqV7Ba_SbJw=0B5A690C" 
-PROJECT_KEY = "LOGI"
+API_TOKEN = "ATATT3xFfGF0R12yA1vqnoxT41NneVgZP5L3Vd8mk30skPLMIkeF5FeSyObXduwJ4f9vQxxiBu71kAXMvbhFmONSA6ybJfhv93dOjnx0FDK-p58Z0F9O5Q71s3IzSPsXFD9_1x0xWiN2YrOOIujZPg04NIQRa_DjHK1KZ2j2lEH4MdYypwerRKU=2F2C01AC" 
+PROJECT_KEY = "POC_AI"
 
 # --- 2. CONNECT ---
 jira = JIRA(server=JIRA_URL, basic_auth=(EMAIL, API_TOKEN))
