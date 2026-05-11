@@ -3,9 +3,9 @@ from jira import JIRA
 
 # 1. --- JIRA CONNECTION ---
 # Replace with your fresh API Token for security
-JIRA_URL = "https://mayankkhede.atlassian.net"
+JIRA_URL = "https://harshjira.atlassian.net"
 EMAIL = "mayankkhede0000@gmail.com"
-API_TOKEN = "ATATT3xFfGF0TDq4eyk13WiIXTJvxC6kE-rHSKVfi7LlynP45Lusf6KIgx7FuSftXWH7ePRB_6vrVRebo3_lop8E3wp7BKipQ8YKIvGhiPS8ZUQAf4OEuYw_P-pw_IyBJQC4K8QlmKkFlb4MXxaM3HYeIYfWwPxaOHYrlPe_tmRjnqV7Ba_SbJw=0B5A690C" 
+API_TOKEN = "ATATT3xFfGF0AsS7w7mEqUrKcqWtF9Fm6uBbWTQBLkJDVvRXl3G08hzdDGKLwarDYX-NKaHfVcZNx5kJcB4S0S2xdKu0aKeOMdw4e8HN7uWvFHvBdYoHCB6z1oUtlGQ94r2w9HSxpIlHMTmuCoCiyVnl90y8OlHQiu3sdTo2-4r7daONW1lDQ_c=632EAACB" 
 
 # Initialize Jira connection once
 @st.cache_resource
@@ -22,17 +22,18 @@ st.markdown("Select a component to fetch associated test scenarios.")
 # 3. --- THE DROPDOWN (FEED LABELS HERE) ---
 # Add all the labels you want to see in the dropdown list
 component_labels = [
-    "LOGI-7", 
+    "AI", 
     "API",
-    "c3",
-    "c-log-webcastsintelligencenurturereportpage"
+    "dashboard",
+    "login",
+    "WIR"
 ]
 
 selected_label = st.selectbox("Select Component Label:", component_labels)
 
 # 4. --- SEARCH LOGIC ---
 if st.button("Fetch Test Scenarios"):
-    jql = f'project = "LOGI" AND type = "Test" AND labels = "{selected_label}" ORDER BY created DESC'
+    jql = f'project = AI AND issuetype = Test AND labels = "{selected_label}" ORDER BY created DESC'
     
     with st.spinner(f"Searching Jira for {selected_label}..."):
         try:

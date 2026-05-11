@@ -43,7 +43,7 @@ def get_eod_report():
     
     jql = (f'project = {PROJECT_KEY} '
            f'AND issuetype IN ("UserStory (Feature Enhancement)", "Bug/Defect", "Technical Debt", "Story", "Bug") '
-           f'AND status IN ("QA-COMPLETED", "Completed", "DEV-ASSIGNED", "Closed", "QA-INPROGRESS", "QA-ONHOLD", "DEV-ASSI") '
+           f'AND status IN ("QA-COMPLETED", "Completed", "DEV-ASSIGNED", "Closed", "QA-INPROGRESS", "QA-ONHOLD") '
            f'AND updated >= "{today_str}" '
            f'AND assignee = currentUser() '
            f'ORDER BY updated DESC')
